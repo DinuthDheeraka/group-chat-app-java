@@ -8,9 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Client;
 import util.Navigations;
+import view.tm.ClientTM;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,9 +27,10 @@ import java.util.ResourceBundle;
 
 public class ServerFormController implements Initializable {
 
-    public TableView tblClients;
-    private ObservableList tblClientsList = FXCollections.observableArrayList();
-    private LinkedHashMap<String,Client> clients;
+    public TableView<ClientTM> tblClients;
+    public TableColumn colClients;
+    private ObservableList<ClientTM> tblClientsList = FXCollections.observableArrayList();
+    private LinkedHashMap<String,Client> clients = new LinkedHashMap();
     private ServerSocket serverSocket = new ServerSocket(9999);
 
     public ServerFormController() throws IOException {
@@ -34,27 +38,40 @@ public class ServerFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        colClients.setCellValueFactory(new PropertyValueFactory("userName"));
         new Thread(()->{
             while (true){
                 try {
                     Socket socket = serverSocket.accept();
-                    System.out.println("Added client");
+                    System.out.println("client accepted..");
                     DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
 
                     new Thread(()->{
                         while (true){
                             try {
-                                System.out.println(dataInputStream.readUTF());
-                                if(dataInputStream.readUTF().startsWith("USER_NAME:")){
-                                    clients.put(dataInputStream.readUTF().replace("USER_NAME:",""),new Client(
-                                            dataInputStream.readUTF().replace("USER_NAME:",""),socket,
+                                String message = dataInputStream.readUTF();
+                                if(message.startsWith("USER_NAME: ")){
+                                    System.out.println(message.replace("USER_NAME: ",""));
+                                    clients.put(message.replace("USER_NAME: ",""),new Client(
+                                            message.replace("USER_NAME: ",""),socket,
                                             dataInputStream,dataOutputStream
                                     ));
-                                    System.out.println("added client");
+                                    System.out.println("added client to list");
+                                    tblClientsList.add(new ClientTM(message.replace("USER_NAME: ","")));
+                                    tblClients.setItems(tblClientsList);
+                                    tblClients.refresh();
+
                                 }else{
                                     System.out.println(dataInputStream.readUTF());
                                 }
+
+                                //Sending messages to all connected users
+                                for(String s : clients.keySet()){
+                                    Client client = clients.get(s);
+                                    client.getDataOutputStream().writeUTF(message);
+                                }
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

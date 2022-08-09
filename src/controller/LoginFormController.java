@@ -30,9 +30,11 @@ public class LoginFormController implements Initializable {
     }
 
     public void minimizeBtnOnAction(ActionEvent actionEvent) {
+        Navigations.getInstance().minimizeStage(actionEvent);
     }
 
     public void closeBtnOnAction(ActionEvent actionEvent) {
+        Navigations.getInstance().closeStage(actionEvent);
     }
 
     public void loginBtnOnAction(ActionEvent actionEvent) {

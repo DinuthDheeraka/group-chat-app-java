@@ -38,7 +38,7 @@ public class ClientFormController implements Initializable {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
                 while (true){
-                    System.out.println(dataInputStream.readUTF());
+                    txtChat.appendText("\n"+dataInputStream.readUTF());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -50,8 +50,9 @@ public class ClientFormController implements Initializable {
         try {
             if(sendBtn.getText().equals("Connect")){
                 sendBtn.setText("Send");
-                dataOutputStream.writeUTF("USER_NAME:"+userName);
+                dataOutputStream.writeUTF("USER_NAME: "+userName);
                 dataOutputStream.flush();
+                txtChat.appendText("\n"+""+txtMessage.getText());
             }else{
                 dataOutputStream.writeUTF(txtMessage.getText());
                 dataOutputStream.flush();

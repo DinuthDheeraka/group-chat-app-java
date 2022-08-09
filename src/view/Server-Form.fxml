@@ -22,7 +22,7 @@
       </AnchorPane>
       <TableView fx:id="tblClients" layoutX="7.0" layoutY="58.0" prefHeight="524.0" prefWidth="577.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Connected Clients" />
+          <TableColumn fx:id="colClients" prefWidth="75.0" text="CONNECTED-CLIENTS" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
