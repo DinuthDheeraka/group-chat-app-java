@@ -13,8 +13,8 @@ public class ApplicationInitializer extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            Navigations.getInstance().setNewStage("Login-Form");
             Navigations.getInstance().setNewStage("Server-Form");
-
         } catch (IOException e) {
             e.printStackTrace();
         }

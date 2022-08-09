@@ -27,44 +27,34 @@ public class ServerFormController implements Initializable {
     public TableView tblClients;
     private ObservableList tblClientsList = FXCollections.observableArrayList();
     private LinkedHashMap<String,Client> clients;
-    private ServerSocket serverSocket;
+    private ServerSocket serverSocket = new ServerSocket(9999);
+
+    public ServerFormController() throws IOException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//          while (true){
-//              try {
-//                  Socket socket = serverSocket.accept();
-//
-//                  DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-//                  DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-//
-//                  //adding a new client(user)
-//                  clients.put(dataInputStream.readUTF(),new Client(dataInputStream.readUTF(),socket,dataInputStream,dataOutputStream));
-//
-//                  //implement live chatting
-//                  new Thread(()->{
-//                      String message = "";
-//                      while (true){
-//                          try {
-//                             message  = clients.get(dataInputStream.readUTF()).getUserName()+" : "+dataInputStream.readUTF();
-//                          } catch (IOException e) {
-//                              e.printStackTrace();
-//                          }
-//                          for(String key : clients.keySet()){
-//                              try {
-//                                  Client client = clients.get(key);
-//                                  client.getDataOutputStream().writeUTF(message);
-//                                  client.getDataOutputStream().flush();
-//                              } catch (IOException e) {
-//                                  e.printStackTrace();
-//                              }
-//                          }
-//                      }
-//                  }).start();
-//              } catch (IOException e) {
-//                  e.printStackTrace();
-//              }
-//          }
+        new Thread(()->{
+            while (true){
+                try {
+                    Socket socket = serverSocket.accept();
+                    System.out.println("came1");
+                    DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                    DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+
+//                    clients.put(dataInputStream.readUTF(),new Client(
+//                            dataInputStream.readUTF(),socket,dataInputStream,dataOutputStream
+//                    ));
+                    System.out.println("Added client");
+
+                    while (true){
+                        System.out.println(dataInputStream.readUTF());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     public void minimizeBtnOnAction(ActionEvent actionEvent) {
@@ -72,6 +62,11 @@ public class ServerFormController implements Initializable {
     }
 
     public void closeBtnOnAction(ActionEvent actionEvent) {
-        Navigations.getInstance().closeStage(actionEvent);
+//        try {
+            //serverSocket.close();
+            System.exit(1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }

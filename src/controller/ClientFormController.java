@@ -4,6 +4,7 @@
  */
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -21,6 +22,7 @@ public class ClientFormController implements Initializable {
 
     public TextArea txtChat;
     public TextField txtMessage;
+    public JFXButton sendBtn;
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
@@ -28,41 +30,34 @@ public class ClientFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        try {
-//            socket  = new Socket("localhost",7777);
-//
-//            dataInputStream = new DataInputStream(socket.getInputStream());
-//            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-//
-//            while (true){
-//                txtChat.appendText("\n"+userName+" : "+dataInputStream.readUTF());
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
+        new Thread(()->{
+            try {
+                socket  = new Socket("localhost",9999);
 
-    public void connect(String userName){
-        try {
-            socket  = new Socket("localhost",7777);
+                dataInputStream = new DataInputStream(socket.getInputStream());
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-
-            while (true){
-                txtChat.appendText("\n"+userName+" : "+dataInputStream.readUTF());
+                while (true){
+                    System.out.println(dataInputStream.readUTF());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     public void sendBtnOnAction(ActionEvent actionEvent) {
         try {
-            dataOutputStream.writeUTF(txtMessage.getText());
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if(sendBtn.getText().equals("Connect")){
+                sendBtn.setText("Send");
+                dataOutputStream.writeUTF(userName);
+                dataOutputStream.flush();
+            }else{
+                dataOutputStream.writeUTF(txtMessage.getText());
+                dataOutputStream.flush();
+            }
+        }catch (IOException e){
+
         }
     }
 
@@ -72,5 +67,9 @@ public class ClientFormController implements Initializable {
 
     public void closeBtnOnAction(ActionEvent actionEvent) {
         Navigations.getInstance().closeStage(actionEvent);
+    }
+
+    public void setUserName(String userName){
+        this.userName = userName;
     }
 }
