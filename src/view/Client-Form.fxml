@@ -18,6 +18,11 @@
                   <Font name="Arial" size="21.0" />
                </font>
             </Label>
+            <Label fx:id="txtUserName" layoutX="134.0" layoutY="14.0" text="Unknown">
+               <font>
+                  <Font name="Arial" size="21.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <TextArea fx:id="txtChat" layoutX="11.0" layoutY="62.0" prefHeight="418.0" prefWidth="558.0" />

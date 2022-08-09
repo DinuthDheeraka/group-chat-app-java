@@ -53,23 +53,31 @@ public class ServerFormController implements Initializable {
                                 String message = dataInputStream.readUTF();
                                 if(message.startsWith("USER_NAME: ")){
                                     System.out.println(message.replace("USER_NAME: ",""));
+                                    String newUser = message.replace("USER_NAME: ","");
                                     clients.put(message.replace("USER_NAME: ",""),new Client(
                                             message.replace("USER_NAME: ",""),socket,
                                             dataInputStream,dataOutputStream
                                     ));
                                     System.out.println("added client to list");
+
+                                    //adding new client to table
                                     tblClientsList.add(new ClientTM(message.replace("USER_NAME: ","")));
                                     tblClients.setItems(tblClientsList);
                                     tblClients.refresh();
 
+                                    //Sending connected user Info
+                                    for(String s : clients.keySet()){
+                                        Client client = clients.get(s);
+                                        client.getDataOutputStream().writeUTF(newUser+" joined");
+                                    }
+
                                 }else{
                                     System.out.println(dataInputStream.readUTF());
-                                }
-
-                                //Sending messages to all connected users
-                                for(String s : clients.keySet()){
-                                    Client client = clients.get(s);
-                                    client.getDataOutputStream().writeUTF(message);
+                                    //Sending messages to all connected users
+                                    for(String s : clients.keySet()){
+                                        Client client = clients.get(s);
+                                        client.getDataOutputStream().writeUTF(message);
+                                    }
                                 }
 
                             } catch (IOException e) {

@@ -7,6 +7,7 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import util.Navigations;
@@ -23,6 +24,7 @@ public class ClientFormController implements Initializable {
     public TextArea txtChat;
     public TextField txtMessage;
     public JFXButton sendBtn;
+    public Label txtUserName;
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
@@ -52,10 +54,10 @@ public class ClientFormController implements Initializable {
                 sendBtn.setText("Send");
                 dataOutputStream.writeUTF("USER_NAME: "+userName);
                 dataOutputStream.flush();
-                txtChat.appendText("\n"+""+txtMessage.getText());
             }else{
-                dataOutputStream.writeUTF(txtMessage.getText());
+                dataOutputStream.writeUTF(userName+" : "+txtMessage.getText());
                 dataOutputStream.flush();
+                txtChat.appendText("\n"+"You : "+txtMessage.getText());
             }
         }catch (IOException e){
 
@@ -72,5 +74,6 @@ public class ClientFormController implements Initializable {
 
     public void setUserName(String userName){
         this.userName = userName;
+        txtUserName.setText(userName);
     }
 }
