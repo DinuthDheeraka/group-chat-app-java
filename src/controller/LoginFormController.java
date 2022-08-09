@@ -7,7 +7,9 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import util.Navigations;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,5 +29,10 @@ public class LoginFormController implements Initializable {
     }
 
     public void loginBtnOnAction(ActionEvent actionEvent) {
+        try {
+            Navigations.getInstance().setNewStage("Client-Form");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

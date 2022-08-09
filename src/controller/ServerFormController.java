@@ -6,9 +6,11 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import model.Client;
+import util.Navigations;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -17,56 +19,59 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
 public class ServerFormController implements Initializable {
 
     public TableView tblClients;
     private ObservableList tblClientsList = FXCollections.observableArrayList();
-    private ArrayList<Client> clients;
+    private LinkedHashMap<String,Client> clients;
     private ServerSocket serverSocket;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Thread(()->{
-          while (true){
-              try {
-                  Socket socket = serverSocket.accept();
+//          while (true){
+//              try {
+//                  Socket socket = serverSocket.accept();
+//
+//                  DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+//                  DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+//
+//                  //adding a new client(user)
+//                  clients.put(dataInputStream.readUTF(),new Client(dataInputStream.readUTF(),socket,dataInputStream,dataOutputStream));
+//
+//                  //implement live chatting
+//                  new Thread(()->{
+//                      String message = "";
+//                      while (true){
+//                          try {
+//                             message  = clients.get(dataInputStream.readUTF()).getUserName()+" : "+dataInputStream.readUTF();
+//                          } catch (IOException e) {
+//                              e.printStackTrace();
+//                          }
+//                          for(String key : clients.keySet()){
+//                              try {
+//                                  Client client = clients.get(key);
+//                                  client.getDataOutputStream().writeUTF(message);
+//                                  client.getDataOutputStream().flush();
+//                              } catch (IOException e) {
+//                                  e.printStackTrace();
+//                              }
+//                          }
+//                      }
+//                  }).start();
+//              } catch (IOException e) {
+//                  e.printStackTrace();
+//              }
+//          }
+    }
 
-                  DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-                  DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+    public void minimizeBtnOnAction(ActionEvent actionEvent) {
+        Navigations.getInstance().minimizeStage(actionEvent);
+    }
 
-                  //adding a new client(user)
-                  clients.add(new Client(dataInputStream.readUTF(),socket,dataInputStream,dataOutputStream));
-
-                  //set client table data
-                  tblClientsList.add(dataInputStream.readUTF());
-                  tblClients.setItems(tblClientsList);
-                  tblClients.refresh();
-
-                  //implement live chatting
-                  new Thread(()->{
-                      String message = null;
-                      while (true){
-                          try {
-                             message  = dataInputStream.readUTF();
-                          } catch (IOException e) {
-                              e.printStackTrace();
-                          }
-                          for(Client client : clients){
-                              try {
-                                  client.getDataOutputStream().writeUTF(message);
-                                  client.getDataOutputStream().flush();
-                              } catch (IOException e) {
-                                  e.printStackTrace();
-                              }
-                          }
-                      }
-                  }).start();
-              } catch (IOException e) {
-                  e.printStackTrace();
-              }
-          }
-        }).start();
+    public void closeBtnOnAction(ActionEvent actionEvent) {
+        Navigations.getInstance().closeStage(actionEvent);
     }
 }
