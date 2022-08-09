@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="536.0" prefWidth="451.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
+   <children>
+      <AnchorPane prefHeight="47.0" prefWidth="468.0" style="-fx-background-color: #9856e3;">
+         <children>
+            <Label layoutX="7.0" layoutY="11.0" text="Live Group Chat" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="21.0" />
+               </font>
+            </Label>
+            <JFXButton buttonType="RAISED" layoutX="379.0" layoutY="6.0" onAction="#minimizeBtnOnAction" prefHeight="33.0" prefWidth="40.0" style="-fx-border-color: white;" text="-" textFill="WHITE" />
+            <JFXButton buttonType="RAISED" layoutX="424.0" layoutY="6.0" onAction="#closeBtnOnAction" prefHeight="33.0" prefWidth="40.0" style="-fx-border-color: white;" text="x" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <TextField fx:id="txtUserName" layoutX="15.0" layoutY="246.0" prefHeight="45.0" prefWidth="438.0" promptText="Enter Username" />
+      <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="443.0" onAction="#loginBtnOnAction" prefHeight="45.0" prefWidth="438.0" style="-fx-background-color: #9856e3;" text="Login" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

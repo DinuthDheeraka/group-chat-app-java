@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.ClientFormController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="549.0" prefWidth="581.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientFormController">
+   <children>
+      <AnchorPane prefHeight="52.0" prefWidth="581.0" style="-fx-background-color: purple;">
+         <children>
+            <JFXButton layoutX="473.0" layoutY="7.0" prefHeight="38.0" prefWidth="43.0" style="-fx-border-color: white;" text="-" textFill="WHITE" />
+            <JFXButton layoutX="525.0" layoutY="7.0" prefHeight="38.0" prefWidth="43.0" style="-fx-border-color: white;" text="x" textFill="WHITE" />
+            <Label layoutX="14.0" layoutY="14.0" text="Chat Room" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TextArea fx:id="txtChat" layoutX="11.0" layoutY="62.0" prefHeight="418.0" prefWidth="558.0" />
+      <TextField fx:id="txtMessage" layoutX="11.0" layoutY="491.0" prefHeight="52.0" prefWidth="415.0" />
+      <JFXButton buttonType="RAISED" layoutX="433.0" layoutY="491.0" onAction="#sendBtnOnAction" prefHeight="52.0" prefWidth="136.0" style="-fx-background-color: purple;" text="Send" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </JFXButton>
+   </children>
 </AnchorPane>
