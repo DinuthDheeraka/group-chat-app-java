@@ -38,18 +38,29 @@ public class ServerFormController implements Initializable {
             while (true){
                 try {
                     Socket socket = serverSocket.accept();
-                    System.out.println("came1");
+                    System.out.println("Added client");
                     DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
 
-//                    clients.put(dataInputStream.readUTF(),new Client(
-//                            dataInputStream.readUTF(),socket,dataInputStream,dataOutputStream
-//                    ));
-                    System.out.println("Added client");
+                    new Thread(()->{
+                        while (true){
+                            try {
+                                System.out.println(dataInputStream.readUTF());
+                                if(dataInputStream.readUTF().startsWith("USER_NAME:")){
+                                    clients.put(dataInputStream.readUTF().replace("USER_NAME:",""),new Client(
+                                            dataInputStream.readUTF().replace("USER_NAME:",""),socket,
+                                            dataInputStream,dataOutputStream
+                                    ));
+                                    System.out.println("added client");
+                                }else{
+                                    System.out.println(dataInputStream.readUTF());
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
 
-                    while (true){
-                        System.out.println(dataInputStream.readUTF());
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -50,7 +50,7 @@ public class ClientFormController implements Initializable {
         try {
             if(sendBtn.getText().equals("Connect")){
                 sendBtn.setText("Send");
-                dataOutputStream.writeUTF(userName);
+                dataOutputStream.writeUTF("USER_NAME:"+userName);
                 dataOutputStream.flush();
             }else{
                 dataOutputStream.writeUTF(txtMessage.getText());
