@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -26,11 +28,16 @@
          </children>
       </AnchorPane>
       <TextArea fx:id="txtChat" layoutX="11.0" layoutY="62.0" prefHeight="418.0" prefWidth="558.0" />
-      <TextField fx:id="txtMessage" layoutX="11.0" layoutY="491.0" prefHeight="52.0" prefWidth="415.0" />
+      <TextField fx:id="txtMessage" layoutX="11.0" layoutY="491.0" prefHeight="52.0" prefWidth="361.0" />
       <JFXButton fx:id="sendBtn" buttonType="RAISED" layoutX="433.0" layoutY="491.0" onAction="#sendBtnOnAction" prefHeight="52.0" prefWidth="136.0" style="-fx-background-color: #9856e3;" text="Connect" textFill="WHITE">
          <font>
             <Font size="21.0" />
          </font>
       </JFXButton>
+      <ImageView fitHeight="52.0" fitWidth="68.0" layoutX="376.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/images/camara.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

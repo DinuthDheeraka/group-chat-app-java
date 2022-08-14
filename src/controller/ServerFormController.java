@@ -99,10 +99,15 @@ public class ServerFormController implements Initializable {
 
     public void closeBtnOnAction(ActionEvent actionEvent) {
 //        try {
-            //serverSocket.close();
-            System.exit(1);
-//        } catch (IOException e) {
-//            e.printStackTrace();
+//            for(String s : clients.keySet()){
+//                clients.get(s).getDataInputStream().close();
+//                clients.get(s).getDataOutputStream().close();
+//                clients.get(s).getSocket().close();
+//            }
+//            //serverSocket.close();
+//        }catch (IOException e){
+//            System.out.println(e.getMessage());
 //        }
+        System.exit(1);
     }
 }

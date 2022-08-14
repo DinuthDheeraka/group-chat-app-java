@@ -57,7 +57,6 @@ public class ClientFormController implements Initializable {
             }else{
                 dataOutputStream.writeUTF(userName+" : "+txtMessage.getText());
                 dataOutputStream.flush();
-                txtChat.appendText("\n"+"You : "+txtMessage.getText());
             }
         }catch (IOException e){
 
